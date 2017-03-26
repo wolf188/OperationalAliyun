@@ -42,11 +42,14 @@ void CDomainOperator::UpdateDomainRecord(const std::string &strUrl, const std::s
 	if (!doc.HasMember("DomainRecords"))
 		return;
 
-	Value &varDomain = doc["DomainRecords"];
-	if (!varDomain.IsObject() || !varDomain.HasMember("Record"))
+	const Value &varDomain = doc["DomainRecords"];
+	if (!varDomain.IsObject())
 		return;
 
-	rapidjson::Value &var = doc["DomainRecords"]["Record"];
+	if (!varDomain.HasMember("Record"))
+		return;
+
+	const rapidjson::Value &var = doc["DomainRecords"]["Record"];
 
 	if (var.IsArray())
 	{
